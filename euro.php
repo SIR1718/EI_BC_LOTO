@@ -1,5 +1,7 @@
 <?php
-$keyText = file_get_contents("http://62.28.241.149/~pmoreira/KEYSERVER/KeyServerJSON.php");
+//$keyText = file_get_contents("http://62.28.241.149/~pmoreira/KEYSERVER/KeyServerJSON.php");
+
+$keyText = file_get_contents("http://localhost/SIR1718/LOTO_EI_BC/keyServerJSON.php");
 
 $keyPHP = json_decode($keyText);
 

@@ -14,19 +14,23 @@ class keyGenerator {
 				$this->numbers[] = $random;
 			}
 		} while (count($this->numbers) < $nn);
+		sort($this->numbers);
 
 		//extract stars
 		do {
-			$random = rand(1,50);
+			$random = rand(1,12);
 			if (!in_array($random, $this->stars)) {
 				$this->stars[] = $random;
 			}
 		} while (count($this->stars) < $ns);
+		sort($this->stars);
 
 	}
 }
 
 $myKey = new keyGenerator(5,2);
-var_dump($myKey);
+$myKeyJSON = json_encode($myKey);
+
+echo $myKeyJSON;
 
 ?>
