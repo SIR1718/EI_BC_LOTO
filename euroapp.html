@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="control">
+		<button id="bgetkey">Get Key</button>
+		<button id="bclean">Clean All Keys</button>
+		
+	</div>
+
+	<div id="content">
+		
+	</div>
+
+	<div id="footer">
+		&copy; EI ESTG-IPVC 2017
+	</div>
+
+</body>
+<script type="text/javascript">
+
+	//keyURL =  "http://62.28.241.149/~pmoreira/KEYSERVER/KeyServerJSON.php";
+
+		keyURL =  "http://localhost/SIR1718/LOTO_EI_BC/keyServerJSON.php"
+
+	bget   = document.getElementById("bgetkey");
+	bclean = document.getElementById("bclean");
+
+	bget.addEventListener("click",getKey);
+	bclean.addEventListener("click",cleanKeys);
+
+	divcontent = document.getElementById("content");
+	
+	//bclean.onclick = cleanKeys; 
+
+
+	function getKey() {
+		// criar
+		req = new XMLHttpRequest();
+
+		// configurar o pedido
+		req.open("GET",keyURL);
+
+		// definir como tratar os dados quando chegarem
+		req.addEventListener("readystatechange", showKey);
+
+		//fazer o pedido
+		req.send();
+
+		function showKey() {
+			console.log(req.readyState);
+			console.log(req.status);
+
+			// completou com sucesso
+			if (req.readyState == 4 && req.status == 200) {
+				console.log(req.responseText);
+				// converter JSON para objecto js nativo
+				keyJS = JSON.parse(req.responseText);
+				console.log(keyJS);
+
+				// criar um div.key
+				divKey = document.createElement("div");
+				divKey.className = "key";
+
+				// criar uma lista ul.numbers
+				// criar uma lista ul.stars
+				uln = document.createElement("ul");
+				uln.className = "numbers";
+
+				uls = document.createElement("ul");
+				uls.className = "stars";
+
+				// povoar a lista uln com os numeros
+				for(i=0 ; i<keyJS.numbers.length; i++) {
+					li = document.createElement("li");
+					li.innerHTML = keyJS.numbers[i];
+					uln.appendChild(li); 
+				}
+
+				// povoar a lista uls com as estrelas
+				for(i=0 ; i<keyJS.stars.length; i++) {
+					li = document.createElement("li");
+					li.innerHTML = keyJS.stars[i];
+					uls.appendChild(li); 
+				}
+
+				// colocar as listas uln e uls dentro de div.key
+				divKey.appendChild(uln);
+				divKey.appendChild(uls);
+
+				// colocar o div.key dentro do div#content
+				divcontent.appendChild(divKey);
+
+			}
+		}
+
+	}
+
+
+
+	function cleanKeys () {
+		divcontent.innerHTML = "";
+	}
+
+
+
+
+</script>
+</html>
